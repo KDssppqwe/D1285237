@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spotify Loading</title>
+    <style>
+        body {
+            background-color: black;
+            color: white;
+            font-family: Arial, sans-serif;
+            text-align: center;
+            overflow: hidden;
+        }
+        #message {
+            font-size: 24px;
+            margin-top: 20vh;
+        }
+        .logo {
+            position: absolute;
+            width: 80px;
+            transition: transform 0.3s ease-in-out;
+        }
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+    </style>
+</head>
+<body>
+<div id="message">Please wait a moment...</div>
+<script>
+    const numLogos = 5;
+    let logos = [];
+
+    function createLogo() {
+        const img = document.createElement('img');
+        img.src = 'spotify.png'; // 確保這個圖片在相同目錄
+        img.classList.add('logo');
+        img.style.left = Math.random() * window.innerWidth + 'px';
+        img.style.top = Math.random() * window.innerHeight + 'px';
+        img.style.animation = `float ${2 + Math.random()}s infinite alternate ease-in-out`;
+        img.onclick = function () {
+            img.remove();
+            logos = logos.filter(l => l !== img);
+            if (logos.length === 0) {
+                generateLogos();
+            }
+        };
+        document.body.appendChild(img);
+        logos.push(img);
+    }
+
+    function generateLogos() {
+        logos.forEach(logo => logo.remove());
+        logos = [];
+        for (let i = 0; i < numLogos; i++) {
+            createLogo();
+        }
+    }
+
+    generateLogos();
+</script>
+</body>
+</html>
