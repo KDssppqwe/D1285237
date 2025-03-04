@@ -13,7 +13,7 @@
             overflow: hidden;
         }
         #message {
-            font-size: 24px;
+            font-size: 36px;
             margin-top: 20vh;
         }
         .logo {
@@ -21,6 +21,7 @@
             width: 80px;
             transition: transform 0.3s ease-in-out;
         }
+        /*圖案漂浮移動效果*/
         @keyframes float {
             0%, 100% {
                 transform: translateY(0);
@@ -31,19 +32,28 @@
         }
     </style>
 </head>
+
 <body>
 <div id="message">Please wait a moment...</div>
 <script>
-    const numLogos = 5;
+    const numLogos = 10;
     let logos = [];
 
     function createLogo() {
         const img = document.createElement('img');
-        img.src = 'spotify.png'; // 確保這個圖片在相同目錄
+        img.src = 'spotify.png';
         img.classList.add('logo');
-        img.style.left = Math.random() * window.innerWidth + 'px';
-        img.style.top = Math.random() * window.innerHeight + 'px';
+        // 使用亂數讓圖案散布，並且不擋到文字
+        let x, y;
+        do {
+            x = Math.random() * window.innerWidth;
+            y = Math.random() * window.innerHeight;
+        } while (y > window.innerHeight * 0.2 - 50 && y < window.innerHeight * 0.2 + 50);
+        img.style.left = x + 'px';
+        img.style.top = y + 'px';
+        // 讓每個商標的動畫時間隨機變化
         img.style.animation = `float ${2 + Math.random()}s infinite alternate ease-in-out`;
+        // 使用function移除圖案
         img.onclick = function () {
             img.remove();
             logos = logos.filter(l => l !== img);
@@ -54,7 +64,7 @@
         document.body.appendChild(img);
         logos.push(img);
     }
-
+    // 使用function重新生成圖案
     function generateLogos() {
         logos.forEach(logo => logo.remove());
         logos = [];
