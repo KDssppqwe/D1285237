@@ -15,6 +15,9 @@
         #message {
             font-size: 36px;
             margin-top: 40vh;
+            position: relative;
+            z-index: 10;
+            line-height: 2; /*增加行距*/
         }
         /*圖案樣式*/
         .logo {
@@ -36,7 +39,9 @@
 </head>
 
 <body>
-<div id="message">Please wait a moment...</div>
+<div id="message">
+    <div style="font-size: 28px; font-weight: bold;">--Spotify Loading--</div>
+    Please wait a moment...</div>
 <script>
     const numLogos = 7;
     let logos = [];
